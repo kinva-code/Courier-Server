@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../static/css/register.css" th:href="@{../css/register.css}" type="text/css">
+    <script>
+        var time=5;
+        function countTime(){
+            document.getElementById("span").innerText=time;
+            if(time==0){
+                document.getElementById("form").submit();
+            }else {
+                time--;
+                setTimeout("countTime()",1000);
+            }
+        }
+        $(document).ready(function () {
+            countTime();
+        });
+    </script>
+</head>
+<body>
+<div id="maindiv">
+    <a class="back" th:href="@{/back}" href="../home.html">返回</a>
+    <h1>湘丰茶叶用户密码修改</h1>
+    <div style="text-align: center;margin-top: 50px;">
+        <ul>
+            <li>
+                <img th:src="@{../image/success_green.png}" src="../../static/image/success_green.png" style="width: 25px;height: 25px;float: left">
+                <div style="float: left;padding: 0px 5px;font-size: 20px;color: black">邮箱验证</div>
+            </li>
+            <li>
+                <img th:src="@{../image/success_green.png}" src="../../static/image/success_green.png" style="width: 25px;height: 25px;float: left">
+                <div style="float: left;padding: 0px 5px;font-size: 20px;color: black">修改密码</div>
+            </li>
+            <li>
+                <img th:src="@{../image/success_green.png}" src="../../static/image/success_green.png" style="width: 25px;height: 25px;float: left">
+                <div style="float: left;padding: 0px 5px;font-size: 20px;color: black">修改成功</div>
+            </li>
+        </ul>
+    </div>
+    <div style="text-align: center;padding: 0px;overflow: hidden">———————————————————————————————————————————————————————————</div>
+    <div style="text-align: center;margin: auto;">
+        <div style="color: #249752;margin-top: 30px;font-size: 20px;" id="tips">
+            <div style="font-size: 40px;margin-bottom: 30px">修改成功</div>
+            <div style="margin-bottom: 10px">页面将在 <span id="span">5</span> s后自动跳转至登录界面</div>
+            <div>若没有自动跳转，请<a class="turntologin" href="../login.html" th:href="@{/login}">点击此处跳转</a></div>
+            <form id="form" method="post" style="display: none" action="/login"></form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

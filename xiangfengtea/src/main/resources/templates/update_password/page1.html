@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码</title>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="../../static/js/util.js" th:src="@{../js/util.js}"></script>
+    <script type="text/javascript" src="../../static/js/retrieve_password_page1.js" th:src="@{../js/retrieve_password_page1.js}"></script>
+    <link rel="stylesheet" href="../../static/css/register.css" th:href="@{../css/register.css}" type="text/css">
+    <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function () {
+            if([[${email}]]!=null){
+                $("#inputshow").val([[${email}]]);
+                $("#input").val([[${email}]]);
+                $("#emailinput").val([[${email}]]);
+                document.getElementById("inputshow").disabled=true;
+                document.getElementById("submit").click();
+            }
+        });
+    </script>
+</head>
+<body>
+<div id="maindiv">
+    <a class="back" th:href="@{/back}" href="../home.html">返回</a>
+    <h1>湘丰茶叶用户密码修改</h1>
+    <div style="text-align: center;margin-top: 50px;">
+        <ul>
+            <li>
+                <img th:src="@{../image/success_green.png}" src="../../static/image/success_green.png" style="width: 25px;height: 25px;float: left">
+                <div style="float: left;padding: 0px 5px;font-size: 20px;color: black">邮箱验证</div>
+            </li>
+            <li>
+                <img th:src="@{../image/success_gray.png}" src="../../static/image/success_gray.png" style="width: 25px;height: 25px;float: left">
+                <div style="float: left;padding: 0px 5px;font-size: 20px;color: #cdcdcd">修改密码</div>
+            </li>
+            <li>
+                <img th:src="@{../image/success_gray.png}" src="../../static/image/success_gray.png" style="width: 25px;height: 25px;float: left">
+                <div style="float: left;padding: 0px 5px;font-size: 20px;color: #cdcdcd">修改成功</div>
+            </li>
+        </ul>
+    </div>
+    <div style="text-align: center;padding: 0px;overflow: hidden">———————————————————————————————————————————————————————————</div>
+    <div style="text-align: center;margin: auto;">
+        <form id="form" class="form" method="post" onsubmit="return getCode()">
+            <div class="inputdiv">
+                <div class="textdiv">电子邮箱</div>
+                <input id="inputshow" class="input" type="text" placeholder="请输入邮箱" required>
+                <input id="input" class="input" type="text" placeholder="请输入邮箱" name="email" style="display:none;">
+                <div id="email_warn" class="warndiv">
+                    <div id="email_warn_text" class="warn">* 邮箱格式错误</div>
+                </div>
+            </div>
+            <div class="inputdiv">
+                <div class="textdiv">验证码</div>
+                <input class="input2" type="tel" name="code">
+                <input id="submit" class="input3" type="submit" value="获取验证码">
+                <div id="verifycode_warn" class="warndiv">
+                    <div class="warn">* 验证码错误</div>
+                </div>
+            </div>
+        </form>
+        <div style="color: #249752;display: none;" id="tips">
+            <div>验证码已发送至邮箱，请在1分钟内进行验证</div>
+            <div>若没有收到邮件，请检查邮箱是否正确或稍后再试</div>
+        </div>
+        <form id="form2" class="form" method="post" onsubmit="return mysubmit()">
+            <input id="emailinput" type="text" name="email" style="display: none">
+            <input id="codeinput" type="text" name="code" style="display: none">
+            <div class="inputdiv">
+                <input class="submit" type="submit" value="下一步" >
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

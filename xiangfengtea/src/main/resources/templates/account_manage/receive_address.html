@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>收货地址</title>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="../../static/js/util.js" th:src="@{../js/util.js}"></script>
+    <script type="text/javascript" src="../../static/js/address_select.js" th:src="@{../js/address_select.js}"></script>
+    <script type="text/javascript" src="../../static/js/receive_address.js" th:src="@{../js/receive_address.js}"></script>
+    <link rel="stylesheet" href="../../static/css/account_manage.css" th:href="@{../css/account_manage.css}" type="text/css">
+    <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function () {
+            if([[${receiveInfoId}]]!=null){
+                $("#receiveInfoId").val([[${receiveInfoId}]]);
+                $("#addressInfoShow").val([[${addressInfo}]]);
+                $("#addressInfo").val([[${addressInfo}]]);
+                $("#receiveAddress").val([[${receiveAddress}]]);
+                $("#receiveName").val([[${receiveName}]]);
+                $("#phoneNum").val([[${phoneNum}]]);
+                if([[${isDefault}]]){
+                    document.getElementById("isDefaultAddress").checked="checked";
+                }
+            }
+        });
+        function mysubmit() {
+            if(checkInput()){
+                if([[${canSave}]]!=0){
+                    return true;
+                }else {
+                    alert("您已保存的地址数量已达上限，请删除一些后再保存新的收货地址");
+                }
+            }
+            return false;
+        }
+    </script>
+</head>
+<body onload="setup();preselect('北京市');">
+<header>
+    <div id="topDiv">
+        <nav>
+            <div id="navigationDiv">
+                <div id="titleDiv" style="height: 60px;line-height: 60px;">个人中心</div>
+                <ul>
+                    <li onclick="window.location.href='/my_xiangfeng/personal_center'">首页</li>
+                    <li onclick="window.location.href='/account_manage/account_security'">账号管理</li>
+                </ul>
+                <ul style="float: right;">
+                    <li onclick="window.location.href='/home'">湘丰网首页</li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+<main>
+    <aside>
+        <header style="text-align: center;font-size: 20px;padding: 10px 0px;color: #249752">账号管理</header>
+        <ul id="mine_func_ul" style="list-style: none;margin: 0">
+            <li onclick="window.location.href='/account_manage/account_security'">安全设置</li>
+            <li onclick="window.location.href='/account_manage/personal_info'">个人资料</li>
+            <li onclick="window.location.href='/account_manage/receive_address'">收货地址</li>
+        </ul>
+    </aside>
+    <article>
+        <div style="margin-bottom: 10px">
+            <header style="margin: 20px 0px 10px 10px;font-size: 20px"><b>新增收货地址</b></header>
+            <div class="infoDiv" style="padding-left: 145px;margin-top: 15px;">
+                <select class="select" name="province" id="s1">
+                    <option></option>
+                </select>
+                <select class="select" name="city" id="s2">
+                    <option></option>
+                </select>
+                <select class="select" name="town" id="s3">
+                    <option></option>
+                </select>
+                <button style="display: inline" onclick="choose()">确认</button>
+            </div>
+            <form style="position: relative" action="/account_manage/saveReceiveInfo" method="post" onsubmit="return mysubmit()">
+                <input id="receiveInfoId" type="text" name="receiveInfoId" style="display: none;">
+                <div class="infoDiv" style="margin-top: 15px;">
+                    <div class="infoTipDiv">地址信息：</div>
+                    <input id="addressInfoShow" style="width: 298px;" type="text" disabled>
+                    <input id="addressInfo" style="display: none" type="text" name="addressInfo">
+                    <div id="addressInfoWarn" class="warn">* 请选择完整的地址</div>
+                </div>
+                <div class="infoDiv" style="margin-top: 15px;">
+                    <div class="infoTipDiv">详细地址：</div>
+                    <textarea id="receiveAddress" name="receiveAddress" warp="virtual" style="resize: none;width: 300px;height: 50px;" minlength="5" maxlength="120" required></textarea>
+                    <div id="receiveAddressWarn" class="warn">* 请正确填写详细地址</div>
+                    <div id="receiveAddress_tip" class="tipdiv" style="top: 40px;left: 460px;">5-120字符，不可包含空格，~!@#$^&*等特殊字符</div>
+                </div>
+                <div class="infoDiv" style="margin-top: 15px;">
+                    <div class="infoTipDiv">收货人姓名：</div>
+                    <input id="receiveName" type="text" name="receiveName" required>
+                    <div id="receiveNameWarn" class="warn">* 请正确填写收货人姓名</div>
+                    <div id="receiveName_tip" class="tipdiv" style="top: 97px;left: 320px;">5-20字符，不可包含空格，~!@#$^&*等特殊字符</div>
+                </div>
+                <div class="infoDiv" style="margin-top: 15px;">
+                    <div class="infoTipDiv">手机号码：</div>
+                    <input id="phoneNum" type="tel" name="phoneNum" maxlength="11" required>
+                    <div id="phoneNumWarn" class="warn">* 请正确填写手机号码</div>
+                </div>
+                <div class="infoDiv" style="margin-left: 140px;margin-top: 15px;">
+                    <input id="isDefaultAddress" type="checkbox" name="isDefaultAddress" value="true">
+                    <div id="defaultAddressDiv" class="infoDiv" style="display: inline;width: 150px;" onclick="setDefaultAddress()">
+                        设为默认收货地址
+                    </div>
+                </div>
+                <input class="submit" type="submit" value="保存">
+            </form>
+        </div>
+        <div style="background-color: rgba(205, 205, 205, 0.70);width: auto;height: 30px;margin: 0px 10px;display: flex;align-items: center;">
+            <img style="width: 15px;height: 15px;margin: 0px 10px;" src="../../static/image/tip_green.png" th:src="@{../image/tip_green.png}">
+            <div style="font-size: 13px;">已保存了 <span th:text="${haveSave}">3</span> 条地址，还能保存 <span th:text="${canSave}">17</span> 条地址</div>
+        </div>
+        <table>
+            <tr>
+                <td style="width: 10%;background-color: rgba(205, 205, 205, 0.70);">收货人</td>
+                <td style="width: 20%;background-color: rgba(205, 205, 205, 0.70);">所在地区</td>
+                <td style="width: 35%;background-color: rgba(205, 205, 205, 0.70);">详细地址</td>
+                <td style="width: 15%;background-color: rgba(205, 205, 205, 0.70);">手机号码</td>
+                <td style="width: 10%;background-color: rgba(205, 205, 205, 0.70);">操作</td>
+                <td style="width: 10%;background-color: rgba(205, 205, 205, 0.70);"></td>
+            </tr>
+            <tr th:each="receiveInfo : ${receiveInfoList}">
+                <td th:text="${receiveInfo.getReceiveName()}"></td>
+                <td th:text="${receiveInfo.getAddressInfo()}"></td>
+                <td th:text="${receiveInfo.getReceiveAddress()}"></td>
+                <td th:text="${receiveInfo.getPhoneNum()}"></td>
+                <td>
+                    <div id="update" class="receiveInfoOperate" th:onclick="'javascript:updateReceiveInfo('+${receiveInfo.getReceiveInfoId()}+')'" style="display: inline">修改</div>
+                    <span> | </span>
+                    <div id="delete" class="receiveInfoOperate" th:onclick="'javascript:deleteReceiveInfo('+${receiveInfo.getReceiveInfoId()}+')'" style="display: inline">删除</div>
+                </td>
+                <td>
+                    <div th:if="${receiveInfo.getReceiveInfoId()==defaultReceiveInfo}" style="color: #249752">默认地址</div>
+                    <div th:if="${receiveInfo.getReceiveInfoId()!=defaultReceiveInfo}" class="receiveInfoOperate" th:onclick="'javascript:setDefaultReceiveInfo('+${receiveInfo.getReceiveInfoId()}+')'">设为默认</div>
+                </td>
+            </tr>
+        </table>
+        <form id="receiveInfoOperateForm" method="post" style="display: none">
+            <input id="receiveInfoIdInput" type="text" name="receiveInfoId">
+        </form>
+    </article>
+</main>
+</body>
+</html>

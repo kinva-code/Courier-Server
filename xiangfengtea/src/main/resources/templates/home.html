@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>湘丰茶叶</title>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        body{
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        #titleDiv{
+            float: left;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            font-size: 30px;
+            color: white;
+        }
+        .mine_icon{
+            width: 25px;
+            height: 25px;
+            display: flex;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: absolute;
+            top: 18px;
+            left: 5px;
+        }
+        .mine_img{
+            width: 50px;
+            height: 50px;
+            display: flex;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin: auto;
+        }
+        #topDiv{
+            width: 100%;
+            height: 60px;
+            background-color: #249752;
+        }
+        #navigationDiv{
+            width: 1200px;
+            margin: auto;
+            height: 100%;
+        }
+        #navigationDiv ul{
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            list-style: none;
+            float: right;
+        }
+        #navigationDiv ul li{
+            float: left;
+            display: block;
+            width: 130px;
+            height: 60px;
+            font-family: Microsoft Yahei;
+            line-height: 60px;
+            margin: 0px 0px;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        #mineLi{
+            position: relative;
+        }
+        #mine{
+            padding-bottom: 10px;
+            background-color: #249752;
+            color: white;
+            width: 270px;
+            /*绝对定位*/
+            position:absolute;
+            top:60px;
+            right: -70px;
+            /*隐藏*/
+            display:none;
+            cursor: auto;
+        }
+        #mineLi:hover #mine{
+            display:block;
+        }
+        #mine a{
+            color: white;
+            text-decoration: none;
+        }
+        #mine a:hover{
+            cursor: pointer;
+            color: black;
+        }
+    </style>
+    <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function () {
+            $("#navigationDiv ul li").mouseenter(function () {
+                $(this).css({
+                    "background-color":"#228b22",
+                });
+            });
+            $("#navigationDiv ul li").mouseleave(function () {
+                $(this).css({
+                    "background-color":"#249752",
+                });
+            });
+            if([[${isLogin}]]){
+                document.getElementById("mineState").innerText="个人中心";
+            }
+        });
+        function mine() {
+            if([[${isLogin}]]){
+                window.location.href="/my_xiangfeng/personal_center";
+            }else {
+                window.location.href="/login";
+            }
+        }
+        function logout() {
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: "/logout",
+                data: $("#form").serialize(),
+                success: function () {
+                    gotoAction("form","/home");
+                },
+                error: function () {
+                    alert("异常！");
+                }
+            });
+            return false;
+        }
+        function gotoAction(form_id,action) {
+            document.getElementById(form_id).action=action;
+            document.getElementById(form_id).submit();
+        }
+    </script>
+</head>
+<body>
+<div id="topDiv">
+    <div id="navigationDiv">
+        <div id="titleDiv">湘丰茶叶</div>
+        <ul id="navigationUl">
+            <li>我的订单</li>
+            <li>我的预订</li>
+            <li>购物车</li>
+            <li id="mineLi">
+                <div onclick="mine()">
+                    <div id="mineState">未登录</div>
+                    <img th:src="@{${userHeadImage}}" src="../static/image/user_head.png" class="mine_icon">
+                </div>
+                <div th:if="${isLogin}" id="mine">
+                    <div>
+                        <a th:href="@{/account_manage/account_security}" href="account_manage/account_security.html">账号管理</a>
+                        <span>|</span>
+                        <a onclick="logout()">退出</a>
+                    </div>
+                    <div>
+                        <div style="width: 70px;height: 70px;display: flex;align-items: center;float: left">
+                            <img th:src="@{${userHeadImage}}" src="../static/image/user_head.png" class="mine_img">
+                        </div>
+                        <div style="float: left;text-align: left;padding-left: 10px;margin-top: -10px;">
+                            <div style="height: 25px;" th:text="${userName}">用户名：徐金华</div>
+                            <div style="height: 25px;" th:text="${vipMessage}">会员时间至：2020-10-31</div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<form id="form" method="post"></form>
+</body>
+</html>

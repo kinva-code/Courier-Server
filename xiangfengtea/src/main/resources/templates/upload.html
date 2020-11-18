@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function showImg(obj) {
+            var reader=new FileReader();
+            reader.readAsDataURL(obj.files[0]);
+            reader.onload=function () {
+                document.getElementById("pic").src=reader.result;
+            }
+        }
+    </script>
+</head>
+<body>
+<form action="/upload" method="post" enctype="multipart/form-data">
+    <input id="file" type="file" name="file" accept="image/*" onchange="showImg(this)">
+    <br>
+    <input type="submit" value="上传" class="btn btn-success">
+</form>
+<div id="theFilePath"></div>
+[[${filename}]]
+<br>
+<img th:src="@{${filename}}" alt="图片">
+<img id="pic" src="C://fakepath/head.png">
+<img id="s" style="width: 50px;height: 50px" src="../static/image/test.png" onclick="document.getElementById('file').click()">
+</body>
+</html>

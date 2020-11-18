@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>账号管理</title>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="../../static/js/util.js" th:src="@{../js/util.js}"></script>
+    <link rel="stylesheet" href="../../static/css/account_manage.css" th:href="@{../css/account_manage.css}" type="text/css">
+    <link rel="stylesheet" href="../../static/css/popupwindow.css" th:href="@{../css/popupwindow.css}" type="text/css">
+    <script type="text/javascript" src="../../static/js/popupwindow.min.js" th:src="@{../js/popupwindow.min.js}"></script>
+    <script type="text/javascript" src="../../static/js/account_security.js" th:src="@{../js/account_security.js}"></script>
+</head>
+<body>
+<header>
+    <div id="topDiv">
+        <nav>
+            <div id="navigationDiv">
+                <div id="titleDiv" style="height: 60px;line-height: 60px;">个人中心</div>
+                <ul>
+                    <li onclick="window.location.href='/my_xiangfeng/personal_center'">首页</li>
+                    <li onclick="window.location.href='/account_manage/account_security'">账号管理</li>
+                </ul>
+                <ul style="float: right;">
+                    <li onclick="window.location.href='/home'">湘丰网首页</li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+<main>
+    <aside>
+        <header style="text-align: center;font-size: 20px;padding: 10px 0px;color: #249752">账号管理</header>
+        <ul id="mine_func_ul" style="list-style: none;margin: 0">
+            <li onclick="window.location.href='/account_manage/account_security'">安全设置</li>
+            <li onclick="window.location.href='/account_manage/personal_info'">个人资料</li>
+            <li onclick="window.location.href='/account_manage/receive_address'">收货地址</li>
+        </ul>
+    </aside>
+    <article>
+        <div style="margin-bottom: 10px">
+            <header style="margin: 20px 0px 10px 10px;font-size: 20px"><b>您的基础信息</b></header>
+            <div class="infoDiv">
+                <div class="infoTipDiv">用 户 名：</div>
+                <div id="name" class="infoTextDiv" th:text="${userName}">金溪云月</div>
+            </div>
+            <br/>
+            <div class="infoDiv">
+                <div class="infoTipDiv">登 录 邮 箱：</div>
+                <div id="email" class="infoTextDiv" th:text="${email}">1193013640@qq.com</div>
+            </div>
+            <br/>
+            <div class="infoDiv">
+                <div class="infoTipDiv">手 机 号 码：</div>
+                <div id="phoneNum" class="infoTextDiv" th:text="${phoneNum}">15274821781</div>
+            </div>
+        </div>
+        <br/>
+        <hr style="color: #249752;border-style: solid" size="1"/>
+        <div>
+            <header style="margin: 20px 0px 10px 10px;font-size: 20px"><b>您的安全服务</b></header>
+            <br/>
+            <div class="securityDiv">
+                <div class="tipState">
+                    <img class="tipImg" th:src="@{../image/success_green.png}" src="../../static/image/success_green.png"><br/>
+                    已设置
+                </div>
+                <div class="tipType">登录密码</div>
+                <div class="tipContent">安全性高的密码可以使账号更安全。建议您定期更换密码，且设置一个包含数字和字母，并长度超过6位以上的密码。</div>
+                <div class="updateDiv" onclick="updatePassword()">修改</div>
+                <form id="form" method="post" action="/update_password/page1" style="display: none">
+                    <input name="email" th:value="${email}" type="text">
+                </form>
+            </div>
+            <hr size=1 style="color: #cdcdcd;border-style:dotted;">
+            <div class="securityDiv">
+                <div class="tipState">
+                    <img class="tipImg" th:src="@{../image/success_green.png}" src="../../static/image/success_green.png"><br/>
+                    已绑定
+                </div>
+                <div class="tipType">绑定手机</div>
+                <div class="tipContent">绑定手机后，您即可享受淘宝丰富的手机服务，也方便与卖家双方互相联系。</div>
+                <div id="updatePhoneNumDiv" class="updateDiv">修改</div>
+            </div>
+        </div>
+    </article>
+</main>
+<div id="updatePhoneNumFormDiv" style="text-align: center">
+    <div style="padding: 10px"><b>请输入您新的手机号码</b></div>
+    <form id="updatePhoneNumForm" method="post" action="/account_manage/updateUserPhoneNum">
+        <input id="newPhoneNum" type="tel" name="newPhoneNum" maxlength="11" style="height: 20px;" required>
+        <br/>
+        <div id="phoneNumWarn" class="warn">* 电话号码不正确</div>
+        <input id="confirm" type="button" value="确认" style="margin: 5px 10px;" onclick="myconfirm()">
+        <input id="cancel" type="button"  value="取消" style="margin: 5px 10px;" onclick="closeDialog()">
+    </form>
+</div>
+</body>
+</html>

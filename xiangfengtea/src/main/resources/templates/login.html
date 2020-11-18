@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="../static/css/login.css" th:href="@{css/login.css}" type="text/css">
+    <script type="text/javascript" src="../static/js/login.js" th:src="@{js/login.js}"></script>
+</head>
+<body style="background-image:url('../static/image/test.png');">
+<div style="overflow: hidden;width: 100%;height: 100%;">
+    <img id="pic" th:src="@{/image/test.png}">
+</div>
+<div id="maindiv" class="maindiv">
+    <div style="padding-bottom: 10px;font-size: 20px"><b>湘丰账号登录</b></div>
+    <div id="warndiv" class="warndiv">
+        <img th:src="@{/image/warn.png}" src="../static/image/warn.png" class="warnimg">
+        <div id="warn_text" class="warn">登录名或登录密码不正确</div>
+    </div>
+    <form id="form" class="form" method="post" onsubmit="return mysubmit()">
+        <div class="divin">
+            <img title="用户名" class="img" th:src="@{/image/head.png}" src="../static/image/head.png"><input class="input" placeholder="用户名/邮箱" type="text" name="account" required>
+        </div>
+        <br/>
+        <div class="divin">
+            <img title="请输入密码" class="img" th:src="@{/image/password.png}" src="../static/image/password.png"><input class="input" placeholder="密码" type="password" name="password" required>
+        </div>
+        <br/>
+        <input class="submit" type="submit" value="登录">
+    </form>
+    <div style="float: right;padding-top: 10px;font-size: 15px">
+        <a th:href="@{/update_password/page1}" href="update_password/page1.html">忘记密码</a>
+        <span>|</span>
+        <a th:href="@{/register/page1}" href="register/page1.html">免费注册</a>
+    </div>
+</div>
+</body>
+</html>

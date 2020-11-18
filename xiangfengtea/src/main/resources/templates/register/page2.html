@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../static/css/register.css" th:href="@{../css/register.css}" type="text/css">
+    <script type="text/javascript" src="../../static/js/util.js" th:src="@{../js/util.js}"></script>
+    <script type="text/javascript" src="../../static/js/register_page2.js" th:src="@{../js/register_page2.js}"></script>
+</head>
+<body>
+<div id="maindiv">
+    <a class="back" th:href="@{/back}" href="../home.html">返回</a>
+    <h1>湘丰茶叶用户注册</h1>
+    <div style="text-align: center;margin-top: 50px;">
+        <ul>
+            <li>
+                <img th:src="@{../image/success_green.png}" src="../../static/image/success_green.png" style="width: 25px;height: 25px;float: left">
+                <div style="float: left;padding: 0px 5px;font-size: 20px;color: black">邮箱注册</div>
+            </li>
+            <li>
+                <img th:src="@{../image/success_green.png}" src="../../static/image/success_green.png" style="width: 25px;height: 25px;float: left">
+                <div style="float: left;padding: 0px 5px;font-size: 20px;color: black">填写账号信息</div>
+            </li>
+            <li>
+                <img th:src="@{../image/success_gray.png}" src="../../static/image/success_gray.png" style="width: 25px;height: 25px;float: left">
+                <div style="float: left;padding: 0px 5px;font-size: 20px;color: #cdcdcd">注册成功</div>
+            </li>
+        </ul>
+    </div>
+    <div style="text-align: center;padding: 0px;overflow: hidden">———————————————————————————————————————————————————————————</div>
+    <div style="text-align: center;margin: auto;">
+        <form id="form" class="form" method="post" onsubmit="return mysubmit()">
+            <div class="inputdiv" style="display: none">
+                <div class="textdiv">电子邮箱</div>
+                <input class="input" type="text" th:value="${email}" name="email">
+                <div id="email_warn" class="warndiv">
+                    <div class="warn">* 邮箱格式错误</div>
+                </div>
+            </div>
+            <div class="inputdiv">
+                <div class="textdiv">用户名</div>
+                <input id="name" class="input" type="text" name="name" placeholder="用户名设置后不可更改" required>
+                <div id="name_warn" class="warndiv">
+                    <div id="name_warn_text" class="warn">* 用户名格式错误</div>
+                </div>
+                <div id="name_tip" class="tipdiv">5-20字符，不可包含空格，~!@#$^&*等特殊字符</div>
+            </div>
+            <div class="inputdiv">
+                <div class="textdiv">登录密码</div>
+                <input id="password" class="input" type="password" name="password" placeholder="设置你的登录密码" required>
+                <div id="password_warn" class="warndiv">
+                    <div class="warn">* 密码格式错误</div>
+                </div>
+                <div id="password_tip" class="tipdiv">6-20字符，只可由数字、字母、下划线组成</div>
+            </div>
+            <div class="inputdiv">
+                <div class="textdiv">密码确认</div>
+                <input id="confirm_password" class="input" type="password" name="confirm_password" placeholder="请再次输入你的密码" required>
+                <div id="confirm_password_warn" class="warndiv">
+                    <div class="warn">* 两次密码不一致</div>
+                </div>
+            </div>
+            <div class="inputdiv">
+                <div class="textdiv">电话号码</div>
+                <input id="phonenum" class="input" type="tel" name="phonenum" maxlength="11" required>
+                <div id="phonenum_warn" class="warndiv">
+                    <div class="warn">* 电话号码不正确</div>
+                </div>
+            </div>
+            <div class="inputdiv">
+                <input class="submit" type="submit" value="提交" >
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

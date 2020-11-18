@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人资料</title>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="../../static/js/util.js" th:src="@{../js/util.js}"></script>
+    <script type="text/javascript" src="../../static/js/personal_info.js" th:src="@{../js/personal_info.js}"></script>
+    <link rel="stylesheet" href="../../static/css/account_manage.css" th:href="@{../css/account_manage.css}" type="text/css">
+    <script type="text/javascript" th:inline="javascript">
+        $(document).ready(function () {
+            if([[${sex}]]=="女"){
+                document.getElementById("female").checked="checked";
+            }
+            document.getElementById("age").value=[[${age}]];
+        });
+    </script>
+</head>
+<body>
+<header>
+    <div id="topDiv">
+        <nav>
+            <div id="navigationDiv">
+                <div id="titleDiv" style="height: 60px;line-height: 60px;">个人中心</div>
+                <ul>
+                    <li onclick="window.location.href='/my_xiangfeng/personal_center'">首页</li>
+                    <li onclick="window.location.href='/account_manage/account_security'">账号管理</li>
+                </ul>
+                <ul style="float: right;">
+                    <li onclick="window.location.href='/home'">湘丰网首页</li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+<main>
+    <aside>
+        <header style="text-align: center;font-size: 20px;padding: 10px 0px;color: #249752">账号管理</header>
+        <ul id="mine_func_ul" style="list-style: none;margin: 0">
+            <li onclick="window.location.href='/account_manage/account_security'">安全设置</li>
+            <li onclick="window.location.href='/account_manage/personal_info'">个人资料</li>
+            <li onclick="window.location.href='/account_manage/receive_address'">收货地址</li>
+        </ul>
+    </aside>
+    <article>
+        <div style="margin-bottom: 10px">
+            <header style="margin: 20px 0px 10px 10px;font-size: 20px"><b>个人资料</b></header>
+            <div class="infoDiv" style="height: 100px;">
+                <div class="infoTipDiv">当前头像：</div>
+                <img id="mine_img" class="mine_img" th:src="@{${userHeadImage}}" src="../../static/image/user_head.png" onclick="document.getElementById('imgfile').click()">
+            </div>
+            <div class="imgWarnTip">* 图片太大，请选择小于 1M 的图片</div>
+            <form action="/account_manage/uploadImg" method="post" enctype="multipart/form-data" onsubmit="return checkImg()">
+                <input id="imgfile" type="file" name="file" accept="image/*" style="display: none" onchange="showImg(this)">
+                <input class="submit" type="submit" value="上传">
+            </form>
+            <br/>
+            <form action="/account_manage/saveUserInfo" method="post">
+                <div class="infoDiv" style="margin-bottom: 15px;">
+                    <div class="infoTipDiv">性别：</div>
+                    <input type="radio" name="sex" checked="checked" value="男"/>男
+                    <input id="female" type="radio" name="sex" value="女"/>女
+                </div>
+                <div class="infoDiv" style="margin-bottom: 10px;">
+                    <div class="infoTipDiv">年龄：</div>
+                    <input id="age" type="number" name="age" min="0" max="100" value="18">
+                </div>
+                <input class="submit" type="submit" value="保存">
+            </form>
+        </div>
+    </article>
+</main>
+</body>
+</html>
